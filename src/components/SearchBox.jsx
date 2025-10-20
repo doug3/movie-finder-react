@@ -1,39 +1,81 @@
-import React from "react";
-
 const SearchBox = () => {
 
 
-  const onSearch = () => {
+  function movieHTML(movie) {
+    return `
+            <div class="movie__box--wrapper">    
+                <div class="movie__box movie__show">
+                    <figure class="movie__poster--wrapper">
+                        <img src="${movie.Poster}" class="movie__poster">
+                    </figure>
+                    <div>
+                        <h2 class="movie__title">${movie.Title}</h2>
+                        <p class="movie__year">Year: ${movie.Year}</p>
+                    </div>
+                </div>
+                <div class="movie__detail movie__hide">
+                    <p><b>Rated:</b> ${movie.Rated}</p>
+                    <p><b>Length:</b> ${movie.Runtime}</p>
+                    <p><b>Director:</b> ${movie.Director}</p>
+                    <p><b>Cast:</b> ${movie.Actors}</p>
+                    <p><b>Plot:</b> ${movie.Plot}</p>
+                </div>
+            </div>
+            `;
+}
+
+  function generateResultsCode(movieArray) {
+    const arrLen = movieArray.length;
+    let newHTML = [];
+    for (let i = 0, j = 0; ((i < arrLen) && j < 6); i++) {
+        if (parseInt(movieArray[i].Year)) {
+            if ((movieArray[i].Year >= rangeInput[0].value) && (movieArray[i].Year <= rangeInput[1].value)) {
+                newHTML[j] = movieHTML(movieArray[i]);
+                j++;
+            }
+        };
+    };
+    movieListElement.innerHTML = newHTML.join("");
+}
+
+  async function moviesDetail(moviesArray) {
+            let movieSingle;
+            let movieSingleArray = [];
+            for (let i = 0; i < moviesArray.length; i++) { 
+                try {
+                    movieSingle = await fetch("https://www.omdbapi.com/?apikey=8097d20a&t=" + moviesArray[i].Title);
+                    movieSingleArray[i] = await movieSingle.json();
+                }
+                catch (error) {
+                    alert("Database Error. Please try again.");
+                }
+            };
+            return movieSingleArray;
+}
+
+  const onSearch = async () => {
     const title = document.getElementById("searchText").value;
     const year = document.getElementById("searchYear").value;
     console.log(`Searching for title: ${title}, year: ${year}`);
-    // Implement search logic here
-    /*
-    async function onSearch() {
-    movieSingles = [];
+    
+    let movieSingles = [];
     movieListElement.innerHTML = "";
-    document.querySelector("#spinner").classList.add("movie__list--loading");
-    resultsHeader.classList.remove("results__header--off");
-    await new Promise(time => setTimeout(time, 1000));
-    const searchTitle = searchBarText.value;
-    const searchYear = searchBarYear.value;
-    var searchKey = "s=" + searchTitle + "&type=movie";
-    searchBarText.value = "";
-    searchBarYear.value = "";
+    let searchKey = "s=" + title + "&type=movie";
+    document.getElementById("searchText").value = "";
+    document.getElementById("searchYear").value = "";
 
-    resultsTerm.innerHTML = searchTitle;
-    if (searchYear) {
-        searchKey += ("&y=" + searchYear);
-        resultsTerm.innerHTML += (" " + searchYear);
+    resultsTerm.innerHTML = title;
+    if (year) {
+        searchKey += ("&y=" + year);
+        resultsTerm.innerHTML += (" " + year);
     }
 
-    if (searchTitle) {
+    if (title) {
         try {
-            var moviesArray;
+            let moviesArray;
             const movies = await fetch("https://www.omdbapi.com/?apikey=8097d20a&" + searchKey);
             const moviesData = await movies.json();
 
-            document.querySelector("#spinner").classList.remove("movie__list--loading");
             
             if (Array.isArray(moviesData.Search)) {
                 moviesArray = moviesData.Search;
@@ -47,12 +89,8 @@ const SearchBox = () => {
             movieListElement.innerHTML = "<p>Database not connected. Try again later.</p>";
         }
     } else {
-        document.querySelector("#spinner").classList.remove("movie__list--loading");
         alert("Title is required to search");
     }   
-}
-    */
-
   };
 
   return (
@@ -67,7 +105,7 @@ const SearchBox = () => {
           ))}
         </select>
         <div className="">
-          <button className="text-gray-600" id="searchNow">
+          <button className="text-gray-600" id="searchNow" onClick={onSearch}>
             <i className="fa-solid fa-magnifying-glass"></i>
           </button>
           </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import SearchBox from '../components/searchBox.jsx'
-
+import MovieResults from '../components/MovieResults.jsx'
 
 
 const SearchResults = () => {
@@ -8,6 +8,7 @@ const SearchResults = () => {
     <div>
       <div className='flex items-center justify-center flex-col space-y-4 mt-8'>
         <SearchBox />
+        <MovieResults />
       </div>
     </div>
   )

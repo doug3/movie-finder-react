@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function Nav() {
+  
+  const [showMenu, setShowMenu] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
@@ -16,6 +18,10 @@ function Nav() {
     };
   }, []);
 
+  const openMenu = () => {
+    setShowMenu(true);
+  }
+
   return (
     <nav>
       <div className="bg-[url('../src/assets/il_3a.jpg')] flex justify-between p-2">
@@ -26,10 +32,10 @@ function Nav() {
             alt="MovieFinder Logo"
           />
         </div>
-        <div id="nav-links" className="text-center pr-4">
+        <div id="nav-links" className="text-center align-middle pr-4">
           {isMobile ? (
-            <div className="modal">
-              <button className="btn__menu" onClick="openMenu()">
+            <div className="text-4xl mt-2"> 
+              <button className="border-none" onClick={openMenu}>
                 <i className="fa-solid fa-bars"></i>
               </button>
             </div>
