@@ -1,13 +1,16 @@
-
-
-// DOM Elements
-const movieListElement = document.getElementById("movieList");
-// const resultsTerm = document.getElementById("resultsTerm");
-// const rangeInput = document.querySelectorAll(".range__input input");
-
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const SearchBox = () => {
+
+
+const SearchBox = ({ setSearchTerm }) => {
+  function setSearchTermLocal(term) {
+    if (setSearchTerm) {
+      setSearchTerm(term);
+    }
+  }
+
+  const movieListElement = document.getElementById("movieList");
   function movieHTML(movie) {
     return `
             <div class="movie__box--wrapper">    
@@ -34,18 +37,18 @@ const SearchBox = () => {
   function generateResultsCode(movieArray) {
     const arrLen = movieArray.length;
     let newHTML = [];
-    for (let i = 0, j = 0; i < arrLen && j < 6; i++) {
-      if (parseInt(movieArray[i].Year)) {
-        if (
-          movieArray[i].Year >= rangeInput[0].value &&
-          movieArray[i].Year <= rangeInput[1].value
-        ) {
-          newHTML[j] = movieHTML(movieArray[i]);
-          j++;
-        }
-      }
-    }
-    movieListElement.innerHTML = newHTML.join("");
+    // for (let i = 0, j = 0; i < arrLen && j < 6; i++) {
+    //   if (parseInt(movieArray[i].Year)) {
+    //     if (
+    //       movieArray[i].Year >= rangeInput[0].value &&
+    //       movieArray[i].Year <= rangeInput[1].value
+    //     ) {
+    //       newHTML[j] = movieHTML(movieArray[i]);
+    //       j++;
+    //     }
+    //   }
+    // }
+    // movieListElement.innerHTML = newHTML.join("");
   }
 
   async function moviesDetail(moviesArray) {
@@ -70,36 +73,34 @@ const SearchBox = () => {
     console.log(`Searching for title: ${title}, year: ${year}`);
 
     let movieSingles = [];
-    movieListElement.innerHTML = "";
-    let searchKey = "s=" + title + "&type=movie";
-    document.getElementById("searchText").value = "";
-    document.getElementById("searchYear").value = "";
-
-    resultsTerm.innerHTML = title;
+    let searchKey = "&s=" + title + "&type=movie";
+    console.log("Initial Search Key:", searchKey);
     if (year) {
       searchKey += "&y=" + year;
-      resultsTerm.innerHTML += " " + year;
     }
 
     if (title) {
+      console.log("Search Key set in App:", searchKey);
+      setSearchTermLocal(searchKey);
       try {
         let moviesArray;
         const movies = await fetch(
-          "https://www.omdbapi.com/?apikey=8097d20a&" + searchKey
+          "https://www.omdbapi.com/?apikey=8097d20a" + searchKey
         );
+        
+
         const moviesData = await movies.json();
+        console.log("Movies Data:", moviesData);
 
         if (Array.isArray(moviesData.Search)) {
           moviesArray = moviesData.Search;
           movieSingles = await moviesDetail(moviesArray);
           generateResultsCode(movieSingles);
         } else {
-          movieListElement.innerHTML =
-            "<p class='results__none'>No results found.</p>";
+          alert("No results found.");
         }
       } catch (error) {
-        movieListElement.innerHTML =
-          "<p>Database not connected. Try again later.</p>";
+        alert(error.message);
       }
     } else {
       alert("Title is required to search");

@@ -11,7 +11,6 @@ const App = () => {
   const [moviesArray, setMoviesArray] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [movieId, setMovieId] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Router>
@@ -20,8 +19,8 @@ const App = () => {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home setSearchTerm={setSearchTerm} />} />
-            <Route path="/search" element={<SearchResults setSearchTerm={setSearchTerm} setMovieId={setMovieId} />} />
-            <Route path="/movie/:id" element={<MovieDetail />} />
+            <Route path="/search" element={<SearchResults setSearchTerm={setSearchTerm} setMoviesArray={setMoviesArray} setMovieId={setMovieId} />} />
+            <Route path="/movie/:id" element={<MovieDetail movieId={movieId} />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>

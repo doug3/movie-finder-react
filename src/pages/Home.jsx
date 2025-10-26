@@ -2,11 +2,11 @@ import React from 'react'
 import SearchBox from '../components/searchBox.jsx'
 import { motion } from 'framer-motion'
 
-const Home = () => {
+const Home = ({ setSearchTerm }) => {
   return (
     <div className='flex flex-col items-center justify-center space-y-4'>
       <img src="./src/assets/default.png" alt="" />
-      <SearchBox />
+      <SearchBox setSearchTerm={setSearchTerm} />
       <motion.div
         initial={{ opacity: 1 }}
         animate={{ opacity: 0 }}
