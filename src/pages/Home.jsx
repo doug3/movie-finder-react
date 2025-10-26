@@ -11,7 +11,7 @@ const Home = () => {
         initial={{ opacity: 1 }}
         animate={{ opacity: 0 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 5 }}
+        transition={{ duration: 3 }}
       >
         <img
           src="./src/assets/filmreel.png"
