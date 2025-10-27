@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 
 
 
-const SearchBox = ({ setSearchTerm }) => {
+const SearchBox = ({ handleSetSearchTerm }) => {
   function setSearchTermLocal(term) {
-    if (setSearchTerm) {
-      setSearchTerm(term);
+    if (handleSetSearchTerm) {
+      handleSetSearchTerm(term);
+      console.log("Search term set to:", term);
     }
   }
 

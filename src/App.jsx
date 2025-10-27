@@ -8,9 +8,17 @@ import Footer from "./components/Footer.jsx";
 import Contact from "./pages/Contact.jsx";
 
 const App = () => {
-  const [moviesArray, setMoviesArray] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [movieId, setMovieId] = useState(null);
+
+  function handleSetSearchTerm(term) {
+    setSearchTerm(term);
+    console.log("App search term set to:", term);
+  }
+
+  function handleSetMovieId(id) {
+    setMovieId(id);
+  }
 
   return (
     <Router>
@@ -18,8 +26,8 @@ const App = () => {
         <Nav />
         <main className="flex-grow">
           <Routes>
-            <Route path="/" element={<Home setSearchTerm={setSearchTerm} />} />
-            <Route path="/search" element={<SearchResults setSearchTerm={setSearchTerm} setMoviesArray={setMoviesArray} setMovieId={setMovieId} />} />
+            <Route path="/" element={<Home handleSetSearchTerm={handleSetSearchTerm} />} />
+            <Route path="/search" element={<SearchResults searchTerm={searchTerm} handleSetSearchTerm={handleSetSearchTerm} handleSetMovieId={handleSetMovieId} />} />
             <Route path="/movie/:id" element={<MovieDetail movieId={movieId} />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>

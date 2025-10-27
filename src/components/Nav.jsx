@@ -28,7 +28,7 @@ function Nav() {
 
   return (
     <nav>
-      <div className="relative bg-[url('../src/assets/il_3a.jpg')] flex justify-between h-24">
+      <div className="relative bg-[url('../src/assets/il_3a.jpg')] flex justify-between h-16 md:h-24">
         <div className="align-middle p-4">
           <img
             className="h-8 md:h-16 pl-10"
@@ -39,7 +39,7 @@ function Nav() {
         <div id="nav-links" className="text-center align-middle pr-4 pt-2">
           {isMobile ? (
             <div>
-              <div className="text-5xl mt-2">
+              <div className="text-3xl md:text-5xl mt-2">
                 <button
                   className="border-none hover:scale-105"
                   onClick={openMenu}
@@ -66,7 +66,7 @@ function Nav() {
                   <div className="absolute w-full rounded-lg z-50">
                     <div className="flex flex-col p-4">
                       <button
-                        className="text-black hover:scale-110 text-6xl rounded-2xl border-2 border-gray-500 m-1"
+                        className="text-black hover:scale-110 text-4xl md:text-6xl rounded-2xl border-2 border-gray-500 m-1"
                         onClick={closeMenu}
                       >
                         <i className="fa-solid fa-xmark"></i>
