@@ -9,7 +9,6 @@ const MovieResults = ({ moviesArray = [], handleSetMovieId }) => {
     if (typeof handleSetMovieId === 'function') {
       handleSetMovieId(movieId);
     }
-    // Navigate to the movie detail page
     navigate(`/movie/${movieId}`);
   };
 

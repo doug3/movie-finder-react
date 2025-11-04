@@ -5,25 +5,26 @@ import axios from 'axios'
 
 
 const SearchResults = ({ searchTerm, handleSetSearchTerm, handleSetMovieId }) => {
+  if (searchTerm) {
+    console.log("SearchResults received searchTerm:", searchTerm);
+  }
   
   const [moviesArray, setMoviesArray] = useState([])
+  const [dbUrl, setDbUrl] = useState("")
+  useEffect(() => {
+    setDbUrl(import.meta.env.VITE_DB_API_SEARCH || "https://www.omdbapi.com/?apikey=thewdb&s=")
+  }, []);
 
   useEffect(() => {
-    console.log("Search term in SearchResults:", searchTerm);
+
     async function fetchMovies() {
-      if (!searchTerm) {
-        setMoviesArray([]);
-        return;
-      }
       try {
-        console.log("Fetching movies for search term:", searchTerm);
         const { data } = await axios.get(
-          `https://www.omdbapi.com/?apikey=8097d20a&s=${searchTerm}`
+          `${dbUrl}${searchTerm}`
         );
-        console.log("API response data:", data);
         if (data.Response === "True") {
           setMoviesArray(data.Search);
-          console.log("Fetched movies:", moviesArray);
+          console.log("Fetched movies:", data.Search);
         } else {
           setMoviesArray([]);
         }
@@ -33,13 +34,8 @@ const SearchResults = ({ searchTerm, handleSetSearchTerm, handleSetMovieId }) =>
       }
     }
     fetchMovies();
-  }, [searchTerm]);
-
-  useEffect(() => {
-    moviesArray.map((movie) => console.log(movie))
-  }, [moviesArray])
-
-
+    
+  }, [searchTerm, dbUrl]);
 
   return (
     <div>

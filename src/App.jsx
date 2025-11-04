@@ -13,7 +13,6 @@ const App = () => {
 
   function handleSetSearchTerm(term) {
     setSearchTerm(term);
-    console.log("App search term set to:", term);
   }
 
   function handleSetMovieId(id) {
@@ -28,7 +27,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home handleSetSearchTerm={handleSetSearchTerm} />} />
             <Route path="/search" element={<SearchResults searchTerm={searchTerm} handleSetSearchTerm={handleSetSearchTerm} handleSetMovieId={handleSetMovieId} />} />
-            <Route path="/movie/:id" element={<MovieDetail movieId={movieId} />} />
+            <Route path="/movie/:id" element={<MovieDetail />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>

@@ -2,113 +2,38 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-
-
-const SearchBox = ({ handleSetSearchTerm }) => {
+const SearchBox = ({ searchTerm, handleSetSearchTerm }) => {
   function setSearchTermLocal(term) {
     if (handleSetSearchTerm) {
       handleSetSearchTerm(term);
-      console.log("Search term set to:", term);
     }
   }
 
-  const movieListElement = document.getElementById("movieList");
-  function movieHTML(movie) {
-    return `
-            <div class="movie__box--wrapper">    
-                <div class="movie__box movie__show">
-                    <figure class="movie__poster--wrapper">
-                        <img src="${movie.Poster}" class="movie__poster">
-                    </figure>
-                    <div>
-                        <h2 class="movie__title">${movie.Title}</h2>
-                        <p class="movie__year">Year: ${movie.Year}</p>
-                    </div>
-                </div>
-                <div class="movie__detail movie__hide">
-                    <p><b>Rated:</b> ${movie.Rated}</p>
-                    <p><b>Length:</b> ${movie.Runtime}</p>
-                    <p><b>Director:</b> ${movie.Director}</p>
-                    <p><b>Cast:</b> ${movie.Actors}</p>
-                    <p><b>Plot:</b> ${movie.Plot}</p>
-                </div>
-            </div>
-            `;
+  if (searchTerm) {
+    document.getElementById("searchText").value = searchTerm.match(/&s=([^&]*)/) ? searchTerm.match(/&s=([^&]*)/)[1] : "";
+    document.getElementById("searchYear").value = searchTerm.match(/&y=(\d{4})/) ? searchTerm.match(/&y=(\d{4})/)[1] : "";
   }
 
-  function generateResultsCode(movieArray) {
-    const arrLen = movieArray.length;
-    let newHTML = [];
-    // for (let i = 0, j = 0; i < arrLen && j < 6; i++) {
-    //   if (parseInt(movieArray[i].Year)) {
-    //     if (
-    //       movieArray[i].Year >= rangeInput[0].value &&
-    //       movieArray[i].Year <= rangeInput[1].value
-    //     ) {
-    //       newHTML[j] = movieHTML(movieArray[i]);
-    //       j++;
-    //     }
-    //   }
-    // }
-    // movieListElement.innerHTML = newHTML.join("");
-  }
 
-  async function moviesDetail(moviesArray) {
-    let movieSingle;
-    let movieSingleArray = [];
-    for (let i = 0; i < moviesArray.length; i++) {
-      try {
-        movieSingle = await fetch(
-          "https://www.omdbapi.com/?apikey=8097d20a&t=" + moviesArray[i].Title
-        );
-        movieSingleArray[i] = await movieSingle.json();
-      } catch (error) {
-        alert("Database Error. Please try again.");
-      }
-    }
-    return movieSingleArray;
-  }
 
   const onSearch = async () => {
     const title = document.getElementById("searchText").value;
     const year = document.getElementById("searchYear").value;
 
-    let movieSingles = [];
     let searchKey = "&s=" + title + "&type=movie";
-    console.log("Initial Search Key:", searchKey);
     if (year) {
       searchKey += "&y=" + year;
     }
 
     if (title) {
-      console.log("Search Key set in App:", searchKey);
       setSearchTermLocal(searchKey);
-    //   try {
-    //     let moviesArray;
-    //     const movies = await axios(
-    //       "https://www.omdbapi.com/?apikey=8097d20a" + searchKey
-    //     );
-        
-    //     const moviesData = movies.data;
-    //     console.log("Movies Data:", moviesData);
-
-    //     if (Array.isArray(moviesData.Search)) {
-    //       moviesArray = moviesData.Search;
-    //       movieSingles = await moviesDetail(moviesArray);
-    //       generateResultsCode(movieSingles);
-    //     } else {
-    //       alert("No results found.");
-    //     }
-    //   } catch (error) {
-    //     alert(error.message);
-    //   }
-    // } else {
-    //   alert("Title is required to search");
+    } else {
+      alert("Please enter a movie title to search.");
     }
   };
 
   return (
-    <div className="flex flex-col w-full max-w-md">
+    <div className="flex w-full max-w-sm">
       <div className="outline flex justify-between w-full outline-blue-300 p-4 m-4 rounded-full">
         <input
           className="outline-none"
