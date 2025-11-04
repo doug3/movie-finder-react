@@ -1,17 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SearchBox from '../components/searchBox.jsx'
 import { motion } from 'framer-motion'
 
-const Home = ({ handleSearchTerm }) => {
+const Home = ({ handleSetSearchTerm }) => {
+
   return (
-    <div className='flex flex-col items-center justify-center space-y-4'>
+    <div className='flex flex-col items-center justify-center overflow-hidden space-y-4'>
       <img src="./src/assets/default.png" alt="" />
-      <SearchBox handleSetSearchTerm={handleSearchTerm} />
+      <SearchBox handleSetSearchTerm={handleSetSearchTerm} />
       <motion.div
-        initial={{ opacity: 1 }}
-        animate={{ opacity: 0 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 3 }}
+        initial={{ x: "100%" }}
+        animate={{ x: "-100%" }}
+        exit={{ x: "-100%" }}
+        transition={{ type: "spring", damping: 25, stiffness: 15 }}
+        style={{
+                    position: "fixed",
+                    top: 110,
+                    left: 0,
+                    width: "70%",
+                    background: "white",
+                    zIndex: -10,
+        }}
       >
         <img
           src="./src/assets/filmreel.png"

@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -71,7 +72,6 @@ const SearchBox = ({ handleSetSearchTerm }) => {
   const onSearch = async () => {
     const title = document.getElementById("searchText").value;
     const year = document.getElementById("searchYear").value;
-    console.log(`Searching for title: ${title}, year: ${year}`);
 
     let movieSingles = [];
     let searchKey = "&s=" + title + "&type=movie";
@@ -83,28 +83,27 @@ const SearchBox = ({ handleSetSearchTerm }) => {
     if (title) {
       console.log("Search Key set in App:", searchKey);
       setSearchTermLocal(searchKey);
-      try {
-        let moviesArray;
-        const movies = await fetch(
-          "https://www.omdbapi.com/?apikey=8097d20a" + searchKey
-        );
+    //   try {
+    //     let moviesArray;
+    //     const movies = await axios(
+    //       "https://www.omdbapi.com/?apikey=8097d20a" + searchKey
+    //     );
         
+    //     const moviesData = movies.data;
+    //     console.log("Movies Data:", moviesData);
 
-        const moviesData = await movies.json();
-        console.log("Movies Data:", moviesData);
-
-        if (Array.isArray(moviesData.Search)) {
-          moviesArray = moviesData.Search;
-          movieSingles = await moviesDetail(moviesArray);
-          generateResultsCode(movieSingles);
-        } else {
-          alert("No results found.");
-        }
-      } catch (error) {
-        alert(error.message);
-      }
-    } else {
-      alert("Title is required to search");
+    //     if (Array.isArray(moviesData.Search)) {
+    //       moviesArray = moviesData.Search;
+    //       movieSingles = await moviesDetail(moviesArray);
+    //       generateResultsCode(movieSingles);
+    //     } else {
+    //       alert("No results found.");
+    //     }
+    //   } catch (error) {
+    //     alert(error.message);
+    //   }
+    // } else {
+    //   alert("Title is required to search");
     }
   };
 
