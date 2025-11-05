@@ -9,10 +9,24 @@ const SearchBox = ({ searchTerm, handleSetSearchTerm }) => {
     }
   }
 
-  if (searchTerm) {
-    document.getElementById("searchText").value = searchTerm.match(/&s=([^&]*)/) ? searchTerm.match(/&s=([^&]*)/)[1] : "";
-    document.getElementById("searchYear").value = searchTerm.match(/&y=(\d{4})/) ? searchTerm.match(/&y=(\d{4})/)[1] : "";
-  }
+  useEffect(() => {
+    if (searchTerm) {
+      console.log("SearchBox received searchTerm:", searchTerm);
+
+      const sMatch = searchTerm.match(/&s=([^&]*)/);
+      const yMatch = searchTerm.match(/&y=(\d{4})/);
+
+      const searchTextEl = document.getElementById("searchText");
+      const searchYearEl = document.getElementById("searchYear");
+
+      if (searchTextEl) {
+        searchTextEl.value = sMatch ? decodeURIComponent(sMatch[1]) : "";
+      }
+      if (searchYearEl) {
+        searchYearEl.value = yMatch ? yMatch[1] : "";
+      }
+    }
+  }, [searchTerm]);
 
 
 
