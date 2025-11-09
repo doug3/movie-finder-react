@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SearchBox = ({ searchTerm, handleSetSearchTerm }) => {
+  const navigate = useNavigate();
+
   function setSearchTermLocal(term) {
     if (handleSetSearchTerm) {
       handleSetSearchTerm(term);
@@ -11,7 +13,6 @@ const SearchBox = ({ searchTerm, handleSetSearchTerm }) => {
 
   useEffect(() => {
     if (searchTerm) {
-      console.log("SearchBox received searchTerm:", searchTerm);
 
       const sMatch = searchTerm.match(/&s=([^&]*)/);
       const yMatch = searchTerm.match(/&y=(\d{4})/);
@@ -28,9 +29,7 @@ const SearchBox = ({ searchTerm, handleSetSearchTerm }) => {
     }
   }, [searchTerm]);
 
-
-
-  const onSearch = async () => {
+  const onSearch = () => {
     const title = document.getElementById("searchText").value;
     const year = document.getElementById("searchYear").value;
 
@@ -44,6 +43,7 @@ const SearchBox = ({ searchTerm, handleSetSearchTerm }) => {
     } else {
       alert("Please enter a movie title to search.");
     }
+    navigate("/search");
   };
 
   return (
@@ -54,6 +54,9 @@ const SearchBox = ({ searchTerm, handleSetSearchTerm }) => {
           type="text"
           id="searchText"
           placeholder="Title (*Required)"
+          onKeyUp={(event) =>
+            (event.key === "Enter" || event.key === "NumpadEnter") && onSearch()
+          }
         />
         <div className="flex items-center">
           <select
@@ -71,11 +74,9 @@ const SearchBox = ({ searchTerm, handleSetSearchTerm }) => {
             )}
           </select>
           <div className="">
-            <Link to="/search">
             <button className="text-gray-600" id="searchNow" onClick={onSearch}>
               <i className="fa-solid fa-magnifying-glass"></i>
             </button>
-            </Link>
           </div>
         </div>
       </div>

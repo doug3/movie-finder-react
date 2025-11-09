@@ -41,7 +41,7 @@ function Nav() {
             <div>
               <div className="text-3xl md:text-5xl mt-2">
                 <button
-                  className="border-none hover:scale-105"
+                  className="border-none hover:scale-115"
                   onClick={openMenu}
                 >
                   <i className="fa-solid fa-bars"></i>
@@ -50,8 +50,8 @@ function Nav() {
               {showMenu && (
                 <motion.div
                   initial={{ x: "100%" }}
-                  animate={{ x: 0 }}
-                  exit={{ x: "100%" }}
+                  animate={{ x: '0%' }}
+                  exit={{ x: "0%" }}
                   transition={{ type: "spring", damping: 25, stiffness: 200 }}
                   style={{
                     position: "fixed",
