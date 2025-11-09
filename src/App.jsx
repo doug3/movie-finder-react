@@ -23,7 +23,7 @@ const App = () => {
     <Router>
       <div className="flex flex-col min-h-screen">
         <Nav />
-        <main className="flex-grow">
+        <main className="flex-grow flex align-center justify-center">
           <Routes>
             <Route path="/" element={<Home handleSetSearchTerm={handleSetSearchTerm} />} />
             <Route path="/search" element={<SearchResults searchTerm={searchTerm} handleSetSearchTerm={handleSetSearchTerm} handleSetMovieId={handleSetMovieId} />} />

@@ -29,14 +29,14 @@ function Nav() {
   return (
     <nav>
       <div className="relative bg-[url('../src/assets/il_3a.jpg')] flex justify-between h-16 md:h-24">
-        <div className="align-middle p-4">
+        <div className="align-middle ml-0 p-4">
           <img
             className="h-8 md:h-16 pl-10"
             src="../src/assets/cover_1.png"
             alt="MovieFinder Logo"
           />
         </div>
-        <div id="nav-links" className="text-center align-middle pr-4 pt-2">
+        <div id="nav-links" className="text-center align-middle mr-4 pt-2">
           {isMobile ? (
             <div>
               <div className="text-3xl md:text-5xl mt-2">
