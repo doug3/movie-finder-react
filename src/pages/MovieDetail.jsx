@@ -67,7 +67,7 @@ const MovieDetail = () => {
           </div>
         </div>
       ) : (
-        <h1>Loading...</h1>
+        <h1>Finding all the juicy details...</h1>
       )}
     </div>
   );

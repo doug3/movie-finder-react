@@ -9,7 +9,7 @@ const SearchResults = ({
   handleSetSearchTerm,
   handleSetMovieId,
 }) => {
-
+  const [loading, setLoading] = useState(true);
   const [moviesArray, setMoviesArray] = useState([]);
   const [dbUrl, setDbUrl] = useState("");
   useEffect(() => {
@@ -25,6 +25,7 @@ const SearchResults = ({
         const { data } = await axios.get(`${dbUrl}${searchTerm}`);
         if (data.Response === "True") {
           setMoviesArray(data.Search);
+          setLoading(false);
         } else {
           setMoviesArray([]);
         }
@@ -36,33 +37,25 @@ const SearchResults = ({
     fetchMovies();
   }, [searchTerm, dbUrl]);
 
+  const [minYear, setMinYear] = useState(1900);
+  const [maxYear, setMaxYear] = useState(2025);
 
-  
-    const [minYear, setMinYear] = useState(1900);
-    const [maxYear, setMaxYear] = useState(2025);
+  function handleMinYear(year) {
+    setMinYear(year);
+  }
 
-    function handleMinYear(year) {
-      setMinYear(year);
-    }
+  function handleMaxYear(year) {
+    setMaxYear(year);
+  }
 
-    function handleMaxYear(year) {
-      setMaxYear(year);
-    }
-
-    useEffect(() => {
-      const filteredMovies = moviesArray.filter((movie) => {
-        const movieYear = parseInt(movie.Year, 10);
-        return movieYear >= minYear && movieYear <= maxYear;
-      });
-      
-    }, [minYear, maxYear, moviesArray]);
-
-
+  useEffect(() => {
+    const filteredMovies = moviesArray.filter((movie) => {
+      const movieYear = parseInt(movie.Year, 10);
+      return movieYear >= minYear && movieYear <= maxYear;
+    });
+  }, [minYear, maxYear, moviesArray]);
 
   return (
-
-    
-
     <div className="w-full">
       <div className="flex items-center justify-center flex-col space-y-4 mt-8">
         <SearchBox
@@ -71,15 +64,24 @@ const SearchResults = ({
         />
         {moviesArray.length > 0 && (
           <div className="outline-1 rounded-full p-2 outline-blue-300">
-            <FilterResults handleMinYear={handleMinYear} handleMaxYear={handleMaxYear} />
+            <FilterResults
+              handleMinYear={handleMinYear}
+              handleMaxYear={handleMaxYear}
+            />
           </div>
         )}
-        <MovieResults
-          moviesArray={moviesArray}
-          handleSetMovieId={handleSetMovieId}
-          minYear={minYear}
-          maxYear={maxYear}
-        />
+        {loading && moviesArray.length > 0 ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-gray-900"></div>
+          </div>
+        ) : (
+          <MovieResults
+            moviesArray={moviesArray}
+            handleSetMovieId={handleSetMovieId}
+            minYear={minYear}
+            maxYear={maxYear}
+          />
+        )}
       </div>
     </div>
   );
