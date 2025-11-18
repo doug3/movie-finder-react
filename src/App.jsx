@@ -22,7 +22,7 @@ const App = () => {
   return (
     <Router>
       <div className="flex flex-col min-h-screen max-h-screen overflow-auto no-scrollbar bg-gray-100">
-        <div className="sticky top-1 z-100">
+        <div className="sticky top-0 z-100">
           <Nav />
         </div>
         <main className="flex-grow flex align-center justify-center">
