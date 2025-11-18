@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SearchBox from "../components/searchBox.jsx";
 import MovieResults from "../components/MovieResults.jsx";
 import axios from "axios";
+import FilterResults from "../components/FilterResults.jsx";
 
 const SearchResults = ({
   searchTerm,
@@ -35,16 +36,49 @@ const SearchResults = ({
     fetchMovies();
   }, [searchTerm, dbUrl]);
 
+
+  
+    const [minYear, setMinYear] = useState(1900);
+    const [maxYear, setMaxYear] = useState(2025);
+
+    function handleMinYear(year) {
+      setMinYear(year);
+    }
+
+    function handleMaxYear(year) {
+      setMaxYear(year);
+    }
+
+    useEffect(() => {
+      const filteredMovies = moviesArray.filter((movie) => {
+        const movieYear = parseInt(movie.Year, 10);
+        return movieYear >= minYear && movieYear <= maxYear;
+      });
+      
+    }, [minYear, maxYear, moviesArray]);
+
+
+
   return (
-    <div>
+
+    
+
+    <div className="w-full">
       <div className="flex items-center justify-center flex-col space-y-4 mt-8">
         <SearchBox
           searchTerm={searchTerm}
           handleSetSearchTerm={handleSetSearchTerm}
         />
+        {moviesArray.length > 0 && (
+          <div className="outline-1 rounded-full p-2 outline-blue-300">
+            <FilterResults handleMinYear={handleMinYear} handleMaxYear={handleMaxYear} />
+          </div>
+        )}
         <MovieResults
           moviesArray={moviesArray}
           handleSetMovieId={handleSetMovieId}
+          minYear={minYear}
+          maxYear={maxYear}
         />
       </div>
     </div>

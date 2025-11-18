@@ -30,11 +30,13 @@ function Nav() {
     <nav>
       <div className="relative bg-[url('../src/assets/il_3a.jpg')] flex justify-between h-16 md:h-24">
         <div className="align-middle ml-0 p-4">
+          <Link to="/">
           <img
             className="h-8 md:h-16 pl-10"
             src="../src/assets/cover_1.png"
             alt="MovieFinder Logo"
           />
+          </Link>
         </div>
         <div id="nav-links" className="text-center align-middle mr-4 pt-2">
           {isMobile ? (
@@ -50,8 +52,8 @@ function Nav() {
               {showMenu && (
                 <motion.div
                   initial={{ x: "100%" }}
-                  animate={{ x: '0%' }}
-                  exit={{ x: "0%" }}
+                  animate={{ x: "0%" }}
+                  exit={{ x: "100%" }}
                   transition={{ type: "spring", damping: 25, stiffness: 200 }}
                   style={{
                     position: "fixed",
@@ -60,7 +62,7 @@ function Nav() {
                     width: "30%",
                     height: "100vh",
                     background: "linear-gradient(to bottom, #e0e0e0, #ffffff)",
-                    zIndex: 1000,
+                    zIndex: 100,
                   }}
                 >
                   <div className="absolute w-full rounded-lg z-50">

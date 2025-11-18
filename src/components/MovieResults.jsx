@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const MovieResults = ({ moviesArray = [], handleSetMovieId }) => {
+const MovieResults = ({ moviesArray = [], handleSetMovieId, minYear, maxYear }) => {
   const navigate = useNavigate();
 
   const handleMovieDetails = (movieId) => {
@@ -10,6 +10,11 @@ const MovieResults = ({ moviesArray = [], handleSetMovieId }) => {
     }
     navigate(`/movie/${movieId}`);
   };
+
+  moviesArray = moviesArray.filter((movie) => {
+    const movieYear = parseInt(movie.Year, 10);
+    return movieYear >= minYear && movieYear <= maxYear;
+  });
 
   return (
     <div className="max-w-screen-xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
