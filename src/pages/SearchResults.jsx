@@ -24,6 +24,7 @@ const SearchResults = ({
       try {
         const { data } = await axios.get(`${dbUrl}${searchTerm}`);
         if (data.Response === "True") {
+          data.Search.sort((a, b) => parseInt(b.Year) - parseInt(a.Year));
           setMoviesArray(data.Search);
           setLoading(false);
         } else {
@@ -35,10 +36,11 @@ const SearchResults = ({
       }
     }
     fetchMovies();
+    
   }, [searchTerm, dbUrl]);
 
   const [minYear, setMinYear] = useState(1900);
-  const [maxYear, setMaxYear] = useState(2025);
+  const [maxYear, setMaxYear] = useState(2026);
 
   function handleMinYear(year) {
     setMinYear(year);
@@ -72,7 +74,7 @@ const SearchResults = ({
         )}
         {loading && moviesArray.length > 0 ? (
           <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-gray-900"></div>
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-300"></div>
           </div>
         ) : (
           <MovieResults

@@ -10,7 +10,7 @@ const Footer = () => {
         </Link>
       </div>
       <div>
-        <p className="text-xs absolute bottom-0 right-0">
+        <p className="text-xs text-gray-400 absolute bottom-0 right-2 p-2">
           Copyright © MovieFinder 2025
         </p>
       </div>
