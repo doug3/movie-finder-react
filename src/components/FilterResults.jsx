@@ -25,7 +25,7 @@ const FilterResults = ({ handleMinYear, handleMaxYear }) => {
             }}
           />
         </div>
-        <div className="mx-4">&lt;-&gt;</div>
+        <div className="mx-4"><i className="fa-solid fa-arrows-left-right"></i></div>
         <div className="outline-none">
           <input
             type="number"
