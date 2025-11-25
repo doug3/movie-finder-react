@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SearchBox from "../components/searchBox.jsx";
+import SearchBox from "../components/SearchBox.jsx";
 import MovieResults from "../components/MovieResults.jsx";
 import axios from "axios";
 import FilterResults from "../components/FilterResults.jsx";

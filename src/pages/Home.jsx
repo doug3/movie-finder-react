@@ -1,5 +1,5 @@
 import React from "react";
-import SearchBox from "../components/searchBox.jsx";
+import SearchBox from "../components/SearchBox.jsx";
 import { motion } from "framer-motion";
 
 const Home = ({ handleSetSearchTerm }) => {
