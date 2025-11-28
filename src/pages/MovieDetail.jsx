@@ -11,7 +11,7 @@ const MovieDetail = () => {
   const [movieFullDetails, setMovieFullDetails] = useState({});
 
   async function fetchMovieDetails(id) {
-    const { data } = await axios.get(`${import.meta.env.VITE_DB_API_ID}${id}`);
+    const { data } = await axios.get(`https://www.omdbapi.com/?apikey=8097d20a&i=${id}`);
     setMovieFullDetails(data);
     setLoading(false);
   }
