@@ -31,7 +31,7 @@ const MovieResults = ({ moviesArray = [], handleSetMovieId, minYear, maxYear }) 
                 src={movie.Poster}
                 className="h-84 object-scale-down rounded-lg"
                 onError={(e) => {
-                  e.target.src = "../src/assets/unavailable.png";
+                  e.target.src = "unavailable.png";
                 }}
               />
             </div>

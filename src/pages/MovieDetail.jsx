@@ -34,7 +34,7 @@ const MovieDetail = () => {
                 src={movieFullDetails.Poster}
                 className="h-120 object-scale-down rounded-lg"
                 onError={(e) => {
-                  e.target.src = "../src/assets/unavailable.png";
+                  e.target.src = "unavailable.png";
                 }}
               />
             </div>
