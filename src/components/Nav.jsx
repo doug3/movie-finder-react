@@ -33,7 +33,7 @@ function Nav() {
           <Link to="/">
           <img
             className="h-8 md:h-16 pl-10"
-            src="../public/cover_1.png"
+            src="cover_1.png"
             alt="MovieFinder Logo"
           />
           </Link>
